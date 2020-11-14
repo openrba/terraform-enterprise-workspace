@@ -30,7 +30,7 @@ resource "tfe_variable" "default_connection_info" {
 # Environment Variables
 resource "tfe_variable" "tenant_id" {
   key          = "ARM_TENANT_ID"
-  value        = var.connection_info.vault_role
+  value        = var.connection_info.tenant_id
   category     = "env"
   workspace_id = tfe_workspace.workspace.id
   sensitive    = false
