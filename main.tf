@@ -11,31 +11,14 @@ resource "tfe_workspace" "workspace" {
 }
 
 # Terraform Variables
-resource "tfe_variable" "vault_token" {
-  key          = "vault_token"
-  value        = var.connection_info.vault_token
+resource "tfe_variable" "default_connection_info" {
+  key          = "default_connection_info"
+  value        = var.connection_info
   category     = "terraform"
   workspace_id = tfe_workspace.workspace.id
   sensitive    = true
-  description  = "Vault token to be used for azure credentials"
-}
-
-resource "tfe_variable" "vault_path" {
-  key          = "vault_azure_credential_path"
-  value        = var.connection_info.vault_backend
-  category     = "terraform"
-  workspace_id = tfe_workspace.workspace.id
-  sensitive    = false
-  description  = "Vault path to azure credentials"
-}
-
-resource "tfe_variable" "vault_role" {
-  key          = "vault_role"
-  value        = var.connection_info.vault_role
-  category     = "terraform"
-  workspace_id = tfe_workspace.workspace.id
-  sensitive    = false
-  description  = "Vault path to azure credentials"
+  hcl          = true
+  description  = "Default vault credentials to be used for azure"
 }
 
 # Environment Variables
