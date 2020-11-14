@@ -13,7 +13,13 @@ resource "tfe_workspace" "workspace" {
 # Terraform Variables
 resource "tfe_variable" "default_connection_info" {
   key          = "default_connection_info"
-  value        = var.connection_info
+  value        = <<EOT
+                  {
+                    %{ for key, value in var.connection_info ~}
+                    ${key} = "${value}"
+                    %{ endfor ~}
+                  }
+                  EOT
   category     = "terraform"
   workspace_id = tfe_workspace.workspace.id
   sensitive    = true
