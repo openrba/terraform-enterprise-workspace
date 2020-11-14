@@ -6,4 +6,28 @@ This should be used with the appropriate vault configuration and orginisation mo
 <br />
 
 <!--- BEGIN_TF_DOCS --->
+## Requirements
+
+No requirements.
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| tfe | n/a |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| additional\_connection\_info | Map of additional connection info, output from the vault configuration module | `map` | n/a | yes |
+| connection\_info | Map of connection info, output from the vault configuration module | `map` | n/a | yes |
+| github\_oauth\_token | GitHub OAuth Token | `string` | n/a | yes |
+| github\_repository | Azure tenant ID, stored as environment variable in workspace | `string` | n/a | yes |
+| name | Name, used for workspace name | `string` | n/a | yes |
+
+## Outputs
+
+No output.
+
 <!--- END_TF_DOCS --->
