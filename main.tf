@@ -22,6 +22,7 @@ resource "tfe_team" "workspace" {
 
   name         = "${var.name}-${each.key}"
   organization = local.organization
+  visibility   = "organization"
 }
 
 resource "tfe_team_access" "workspace" {
