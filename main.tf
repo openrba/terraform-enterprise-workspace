@@ -1,7 +1,13 @@
+locals {
+  access_levels = ["read", "write", "plan"]
+  organization  = "Infrastructure"
+  tfe_endpoint  = "tfe.lnrisk.io"
+}
+
 # Create Workspace 
 resource "tfe_workspace" "workspace" {
   name         = var.name
-  organization = "Infrastructure"
+  organization = local.organization
 
   vcs_repo {
     identifier     = var.github_repository
@@ -11,15 +17,11 @@ resource "tfe_workspace" "workspace" {
 }
 
 # Workspace Team & Access
-locals {
-  access_levels = ["read", "write", "plan"]
-}
-
 resource "tfe_team" "workspace" {
   for_each = toset(local.access_levels)
 
   name         = "${var.name}-${each.key}"
-  organization = "Infrastructure"
+  organization = local.organization
 }
 
 resource "tfe_team_access" "workspace" {
@@ -63,6 +65,33 @@ resource "tfe_variable" "default_connection_info" {
   sensitive    = true
   hcl          = true
   description  = "Default vault credentials to be used for azure"
+}
+
+resource "tfe_variable" "tfe_workspace_name" {
+  key          = "tfe_workspace_name"
+  value        = var.name
+  category     = "terraform"
+  workspace_id = tfe_workspace.workspace.id
+  sensitive    = false
+  description  = "Terraform Enterprise workspace name"
+}
+
+resource "tfe_variable" "tfe_workspace_org" {
+  key          = "tfe_workspace_org"
+  value        = local.organization
+  category     = "terraform"
+  workspace_id = tfe_workspace.workspace.id
+  sensitive    = false
+  description  = "Terraform Enterprise workspace organization"
+}
+
+resource "tfe_variable" "tfe_endpoint" {
+  key          = "tfe_endpoint"
+  value        = local.tfe_endpoint
+  category     = "terraform"
+  workspace_id = tfe_workspace.workspace.id
+  sensitive    = false
+  description  = "Terraform Enterprise endpoint"
 }
 
 # Environment Variables
