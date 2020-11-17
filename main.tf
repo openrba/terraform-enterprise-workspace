@@ -1,5 +1,5 @@
 locals {
-  access_levels = ["read", "write", "plan"]
+  access_levels = ["read", "write"]
   organization  = "Infrastructure"
   tfe_endpoint  = "tfe.lnrisk.io"
 }
@@ -20,7 +20,7 @@ resource "tfe_workspace" "workspace" {
 resource "tfe_team" "workspace" {
   for_each = toset(local.access_levels)
 
-  name         = "${var.name}-${each.key}"
+  name         = "ris-azr-group-tfe-${var.name}-${each.key}"
   organization = local.organization
   visibility   = "organization"
 }
