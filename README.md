@@ -14,6 +14,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
+| azuread | n/a |
 | tfe | n/a |
 
 ## Inputs
