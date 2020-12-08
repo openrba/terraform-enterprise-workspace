@@ -21,17 +21,19 @@ data "azuread_service_principal" "guestsync" {
   display_name = "ris-azr-app-infrastructure-guestsync"
 }
 
-data "azuread_group" "teams" {
+resource "azuread_group" "team" {
   for_each = toset(local.access_levels)
 
-  name = "ris-azr-group-tfe-${var.name}-${each.key}"
+  name                    = "ris-azr-group-tfe-${var.name}-${each.key}"
+  owners                  = [data.azuread_service_principal.guestsync.id]
+  prevent_duplicate_names = true
 }
 
 # Workspace Team & Access
 resource "tfe_team" "workspace" {
   for_each = toset(local.access_levels)
 
-  name         = data.azuread_group.teams[each.key].id
+  name         = azuread_group.team[each.key].id
   organization = local.organization
   visibility   = "organization"
 }
