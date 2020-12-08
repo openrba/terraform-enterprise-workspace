@@ -16,11 +16,18 @@ resource "tfe_workspace" "workspace" {
   
 }
 
+# Azure AD Group
+resource "azuread_group" "team" {
+  for_each = toset(local.access_levels)
+  name = "ris-azr-group-tfe-${var.name}-${each.key}"
+  prevent_duplicate_names = true
+}
+
 # Workspace Team & Access
 resource "tfe_team" "workspace" {
   for_each = toset(local.access_levels)
 
-  name         = "ris-azr-group-tfe-${var.name}-${each.key}"
+  name         = azuread_group.team[each.key].id
   organization = local.organization
   visibility   = "organization"
 }
