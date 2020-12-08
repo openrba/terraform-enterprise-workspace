@@ -33,24 +33,6 @@ resource "tfe_team_access" "workspace" {
   workspace_id = tfe_workspace.workspace.id
 }
 
-# Team Token
-resource "tfe_team_token" "workspace" {
-  for_each = toset(local.access_levels)
-
-  team_id = tfe_team.workspace[each.key].id
-}
-
-resource "tfe_variable" "team_token" {
-  for_each = toset(local.access_levels)
-  
-  key          = "tfe_team_token_${each.key}"
-  value        = tfe_team_token.workspace[each.key].token
-  category     = "terraform"
-  workspace_id = tfe_workspace.workspace.id
-  sensitive    = true
-  description  = "Terraform Enteprise Workspace - ${each.key} Team Token"
-}
-
 # Terraform Variables
 resource "tfe_variable" "default_connection_info" {
   key          = "default_connection_info"
