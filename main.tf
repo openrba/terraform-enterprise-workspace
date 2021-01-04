@@ -17,15 +17,15 @@ resource "tfe_workspace" "workspace" {
 }
 
 # Azure AD Group
-data "azuread_service_principal" "guestsync" {
-  display_name = "ris-azr-app-infrastructure-guestsync"
+data "azuread_service_principal" "group_owner" {
+  display_name = "ris-azr-app-infrastructure-terraformenterprise-aad-group-owner"
 }
 
 resource "azuread_group" "team" {
   for_each = toset(local.access_levels)
 
   name                    = "ris-azr-group-tfe-${var.name}-${each.key}"
-  owners                  = [data.azuread_service_principal.guestsync.id]
+  owners                  = [data.azuread_service_principal.group_owner.id]
   prevent_duplicate_names = true
 }
 
