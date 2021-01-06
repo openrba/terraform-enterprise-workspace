@@ -21,11 +21,18 @@ data "azuread_service_principal" "group_owner" {
   display_name = "ris-azr-app-infrastructure-terraformenterprise-aad-group-owner"
 }
 
+data "azuread_service_principal" "ad_sync" {
+  display_name = "ris-azr-app-infrastructure-guestsync"
+}
+
 resource "azuread_group" "team" {
   for_each = toset(local.access_levels)
 
   name                    = "ris-azr-group-tfe-${var.name}-${each.key}"
-  owners                  = [data.azuread_service_principal.group_owner.id]
+  owners                  = [
+    data.azuread_service_principal.group_owner.id, 
+    data.azuread_service_principal.ad_sync.id
+  ]
   prevent_duplicate_names = true
 }
 
