@@ -12,6 +12,7 @@ resource "tfe_workspace" "workspace" {
   vcs_repo {
     identifier     = var.github_repository
     oauth_token_id = var.github_oauth_token
+    branch         = var.github_branch
   }
   
 }
@@ -28,7 +29,7 @@ data "azuread_service_principal" "ad_sync" {
 resource "azuread_group" "team" {
   for_each = toset(local.access_levels)
 
-  name                    = "ris-azr-group-tfe-${var.name}-${each.key}"
+  display_name            = "ris-azr-group-tfe-${var.name}-${each.key}"
   owners                  = [
     data.azuread_service_principal.group_owner.id, 
     data.azuread_service_principal.ad_sync.id

@@ -5,7 +5,12 @@ variable "name" {
 
 # GitHub
 variable "github_repository" { 
-  description = "Azure tenant ID, stored as environment variable in workspace"
+  description = "GitHub repository name"
+  type        = string
+}
+
+variable "github_branch" {
+  description = "GitHub branch name"
   type        = string
 }
 
