@@ -23,8 +23,9 @@ No requirements.
 |------|-------------|------|---------|:--------:|
 | additional\_connection\_info | Map of additional connection info, output from the vault configuration module | `map` | n/a | yes |
 | connection\_info | Map of connection info, output from the vault configuration module | `map` | n/a | yes |
+| github\_branch | GitHub branch name | `string` | n/a | yes |
 | github\_oauth\_token | GitHub OAuth Token | `string` | n/a | yes |
-| github\_repository | Azure tenant ID, stored as environment variable in workspace | `string` | n/a | yes |
+| github\_repository | GitHub repository name | `string` | n/a | yes |
 | name | Name, used for workspace name | `string` | n/a | yes |
 
 ## Outputs

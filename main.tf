@@ -12,6 +12,7 @@ resource "tfe_workspace" "workspace" {
   vcs_repo {
     identifier     = var.github_repository
     oauth_token_id = var.github_oauth_token
+    branch         = var.github_branch
   }
   
 }
@@ -28,7 +29,7 @@ data "azuread_service_principal" "ad_sync" {
 resource "azuread_group" "team" {
   for_each = toset(local.access_levels)
 
-  name                    = "ris-azr-group-tfe-${var.name}-${each.key}"
+  display_name            = "ris-azr-group-tfe-${var.name}-${each.key}"
   owners                  = [
     data.azuread_service_principal.group_owner.id, 
     data.azuread_service_principal.ad_sync.id
@@ -114,4 +115,23 @@ resource "tfe_variable" "subscription_id" {
   workspace_id = tfe_workspace.workspace.id
   sensitive    = false
   description  = "Azure Subscription ID"
+}
+
+# GitHub Repository
+resource "tfe_variable" "github_branch" {
+  key          = "github_branch"
+  value        = var.github_branch
+  category     = "terraform"
+  workspace_id = tfe_workspace.workspace.id
+  sensitive    = false
+  description  = "Terraform Enterprise endpoint"
+}
+
+resource "tfe_variable" "github_repository" {
+  key          = "github_repository"
+  value        = var.github_repository
+  category     = "terraform"
+  workspace_id = tfe_workspace.workspace.id
+  sensitive    = false
+  description  = "Terraform Enterprise endpoint"
 }
