@@ -116,3 +116,22 @@ resource "tfe_variable" "subscription_id" {
   sensitive    = false
   description  = "Azure Subscription ID"
 }
+
+# GitHub Repository
+resource "tfe_variable" "github_branch" {
+  key          = "github_branch"
+  value        = var.github_branch
+  category     = "terraform"
+  workspace_id = tfe_workspace.workspace.id
+  sensitive    = false
+  description  = "Terraform Enterprise endpoint"
+}
+
+resource "tfe_variable" "github_repository" {
+  key          = "github_repository"
+  value        = var.github_repository
+  category     = "terraform"
+  workspace_id = tfe_workspace.workspace.id
+  sensitive    = false
+  description  = "Terraform Enterprise endpoint"
+}
