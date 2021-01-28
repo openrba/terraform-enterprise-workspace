@@ -71,6 +71,24 @@ resource "tfe_variable" "default_connection_info" {
   description  = "Default vault credentials to be used for azure"
 }
 
+resource "tfe_variable" "additional_connection_info" {
+  for_each = var.additional_connection_info
+
+  key          = "${each.key}_connection_info_$"
+  value        = <<EOT
+                  {
+                    %{ for key, value in each.value ~}
+                    ${key} = "${value}"
+                    %{ endfor ~}
+                  }
+                  EOT
+  category     = "terraform"
+  workspace_id = tfe_workspace.workspace.id
+  sensitive    = true
+  hcl          = true
+  description  = "Additional vault credentials to be used for azure"
+}
+
 resource "tfe_variable" "tfe_workspace_name" {
   key          = "tfe_workspace_name"
   value        = var.name
