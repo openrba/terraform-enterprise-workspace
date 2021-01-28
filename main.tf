@@ -74,7 +74,7 @@ resource "tfe_variable" "default_connection_info" {
 resource "tfe_variable" "additional_connection_info" {
   for_each = var.additional_connection_info
 
-  key          = "${each.key}_connection_info_$"
+  key          = "${each.key}_connection_info"
   value        = <<EOT
                   {
                     %{ for key, value in each.value ~}
