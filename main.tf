@@ -1,13 +1,11 @@
 locals {
   access_levels = ["read", "write"]
-  organization  = "Infrastructure"
-  tfe_endpoint  = "tfe.lnrisk.io"
 }
 
 # Create Workspace 
 resource "tfe_workspace" "workspace" {
   name         = var.name
-  organization = local.organization
+  organization = var.organization
 
   vcs_repo {
     identifier     = var.github_repository
@@ -42,7 +40,7 @@ resource "tfe_team" "workspace" {
   for_each = toset(local.access_levels)
 
   name         = azuread_group.team[each.key].id
-  organization = local.organization
+  organization = var.organization
   visibility   = "organization"
 }
 
@@ -109,7 +107,7 @@ resource "tfe_variable" "tfe_workspace_org" {
 
 resource "tfe_variable" "tfe_endpoint" {
   key          = "tfe_endpoint"
-  value        = local.tfe_endpoint
+  value        = var.tfe_endpoint
   category     = "terraform"
   workspace_id = tfe_workspace.workspace.id
   sensitive    = false

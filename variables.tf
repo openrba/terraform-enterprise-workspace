@@ -1,6 +1,18 @@
+variable "tfe_endpoint" {
+  description = "Terraform Enterprise API endpoint"
+  type        = string
+  default     = "tfe.lnrisk.io"
+}
+
 variable "name" {
   description = "Name, used for workspace name"
   type        = string
+}
+
+variable "organization" {
+  description = "TFE Organization"
+  type        = string
+  default     = "Infrastructure"
 }
 
 # GitHub
@@ -17,7 +29,6 @@ variable "github_branch" {
 variable "github_oauth_token" {
   description = "GitHub OAuth Token"
   type        = string
-
 }
 
 # Connection Details
