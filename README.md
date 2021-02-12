@@ -27,6 +27,8 @@ No requirements.
 | github\_oauth\_token | GitHub OAuth Token | `string` | n/a | yes |
 | github\_repository | GitHub repository name | `string` | n/a | yes |
 | name | Name, used for workspace name | `string` | n/a | yes |
+| organization | TFE Organization | `string` | `"Infrastructure"` | no |
+| tfe\_endpoint | Terraform Enterprise API endpoint | `string` | `"tfe.lnrisk.io"` | no |
 
 ## Outputs
 
