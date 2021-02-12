@@ -98,7 +98,7 @@ resource "tfe_variable" "tfe_workspace_name" {
 
 resource "tfe_variable" "tfe_workspace_org" {
   key          = "tfe_workspace_org"
-  value        = local.organization
+  value        = var.organization
   category     = "terraform"
   workspace_id = tfe_workspace.workspace.id
   sensitive    = false
