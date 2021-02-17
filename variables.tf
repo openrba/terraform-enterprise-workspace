@@ -31,6 +31,11 @@ variable "github_oauth_token" {
   type        = string
 }
 
+variable "ssh_key_id" {
+  description = "Unique ID of the TFE SSH ID"
+  type        = string
+}
+
 # Connection Details
 variable "connection_info" { 
   description = "Map of connection info, output from the vault configuration module"

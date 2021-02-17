@@ -6,6 +6,7 @@ locals {
 resource "tfe_workspace" "workspace" {
   name         = var.name
   organization = var.organization
+  ssh_key_id   = var.ssh_key_id
 
   vcs_repo {
     identifier     = var.github_repository
