@@ -28,6 +28,7 @@ No requirements.
 | github\_repository | GitHub repository name | `string` | n/a | yes |
 | name | Name, used for workspace name | `string` | n/a | yes |
 | organization | TFE Organization | `string` | `"Infrastructure"` | no |
+| ssh\_key\_id | Unique ID of the TFE SSH ID | `string` | n/a | yes |
 | tfe\_endpoint | Terraform Enterprise API endpoint | `string` | `"tfe.lnrisk.io"` | no |
 
 ## Outputs
