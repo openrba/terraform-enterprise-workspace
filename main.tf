@@ -13,7 +13,7 @@ resource "tfe_workspace" "workspace" {
     oauth_token_id = var.github_oauth_token
     branch         = var.github_branch
   }
-  
+
 }
 
 # Azure AD Group
@@ -28,9 +28,9 @@ data "azuread_service_principal" "ad_sync" {
 resource "azuread_group" "team" {
   for_each = toset(local.access_levels)
 
-  display_name            = "ris-azr-group-tfe-${var.name}-${each.key}"
-  owners                  = [
-    data.azuread_service_principal.group_owner.id, 
+  display_name = "ris-azr-group-tfe-${var.name}-${each.key}"
+  owners = [
+    data.azuread_service_principal.group_owner.id,
     data.azuread_service_principal.ad_sync.id
   ]
   prevent_duplicate_names = true
@@ -58,9 +58,9 @@ resource "tfe_variable" "default_connection_info" {
   key          = "default_connection_info"
   value        = <<EOT
                   {
-                    %{ for key, value in var.connection_info ~}
+                    %{for key, value in var.connection_info~}
                     ${key} = "${value}"
-                    %{ endfor ~}
+                    %{endfor~}
                   }
                   EOT
   category     = "terraform"
@@ -76,9 +76,9 @@ resource "tfe_variable" "additional_connection_info" {
   key          = "${each.key}_connection_info"
   value        = <<EOT
                   {
-                    %{ for key, value in each.value ~}
+                    %{for key, value in each.value~}
                     ${key} = "${value}"
-                    %{ endfor ~}
+                    %{endfor~}
                   }
                   EOT
   category     = "terraform"
@@ -151,4 +151,15 @@ resource "tfe_variable" "github_repository" {
   workspace_id = tfe_workspace.workspace.id
   sensitive    = false
   description  = "Terraform Enterprise endpoint"
+}
+
+# Azure Active Directory Group
+
+resource "tfe_variable" "azuread_group_id" {
+  key          = "aad_group_id"
+  value        = var.azuread_group_id
+  category     = "terraform"
+  workspace_id = tfe_workspace.workspace.id
+  sensitive    = false
+  description  = "Azure Active Directory Group ID that always contains the temporary Service Principal"
 }
