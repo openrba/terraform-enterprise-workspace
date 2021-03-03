@@ -21,8 +21,9 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| additional\_connection\_info | Map of additional connection info, output from the vault configuration module | `map` | n/a | yes |
-| connection\_info | Map of connection info, output from the vault configuration module | `map` | n/a | yes |
+| additional\_connection\_info | Map of additional connection info, output from the vault configuration module | `map(any)` | n/a | yes |
+| azuread\_group\_id | Azure Active Directory group ID - to be added as workspace variable | `string` | n/a | yes |
+| connection\_info | Map of connection info, output from the vault configuration module | `map(any)` | n/a | yes |
 | github\_branch | GitHub branch name | `string` | n/a | yes |
 | github\_oauth\_token | GitHub OAuth Token | `string` | n/a | yes |
 | github\_repository | GitHub repository name | `string` | n/a | yes |

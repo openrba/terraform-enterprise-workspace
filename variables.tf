@@ -16,7 +16,7 @@ variable "organization" {
 }
 
 # GitHub
-variable "github_repository" { 
+variable "github_repository" {
   description = "GitHub repository name"
   type        = string
 }
@@ -37,12 +37,18 @@ variable "ssh_key_id" {
 }
 
 # Connection Details
-variable "connection_info" { 
+variable "connection_info" {
   description = "Map of connection info, output from the vault configuration module"
-  type        = map
+  type        = map(any)
 }
 
-variable "additional_connection_info" { 
+variable "additional_connection_info" {
   description = "Map of additional connection info, output from the vault configuration module"
-  type        = map
+  type        = map(any)
+}
+
+# AAD Group
+variable "azuread_group_id" {
+  description = "Azure Active Directory group ID - to be added as workspace variable"
+  type        = string
 }
